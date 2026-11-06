@@ -41,6 +41,7 @@ On other big maps YANMC still uses the Kentucky town outlines, so nearly everyth
 ```sh
 just check  # syntax check the lua, needs luac
 just link   # link workshop/ into ~/Zomboid/Workshop to test and upload it in game
+just unlink # remove that symlink again
 ```
 
 Upload from the main menu under Workshop. The game writes the item id into `workshop/workshop.txt`, commit it afterwards.
