@@ -1,0 +1,15 @@
+{
+  "Sandbox_BanditsLargeMaps": "Bandits Wanderers for Large Maps",
+  "Sandbox_BanditsLargeMaps.FarPoints": "Far Points per Player",
+  "Sandbox_BanditsLargeMaps.FarPoints_tooltip": "Destinations around each player where wanderer groups start and roam.",
+  "Sandbox_BanditsLargeMaps.NearPoints": "Near Points per Player",
+  "Sandbox_BanditsLargeMaps.NearPoints_tooltip": "Destinations close to each player. More of them make wanderers pass by more often.",
+  "Sandbox_BanditsLargeMaps.FarMinDistance": "Far Points Minimum Distance",
+  "Sandbox_BanditsLargeMaps.FarMinDistance_tooltip": "In tiles. Bandits only starts groups more than 150 tiles away from every player.",
+  "Sandbox_BanditsLargeMaps.FarMaxDistance": "Far Points Maximum Distance",
+  "Sandbox_BanditsLargeMaps.FarMaxDistance_tooltip": "In tiles. Groups move about 4 tiles per game minute.",
+  "Sandbox_BanditsLargeMaps.NearMaxDistance": "Near Points Maximum Distance",
+  "Sandbox_BanditsLargeMaps.NearMaxDistance_tooltip": "In tiles. Groups turn into NPCs 60 to 70 tiles away from a player.",
+  "Sandbox_BanditsLargeMaps.RecycleDistance": "Recycle Distance",
+  "Sandbox_BanditsLargeMaps.RecycleDistance_tooltip": "In tiles. Wanderer groups farther than this from every player are moved to a far point around a player."
+}
