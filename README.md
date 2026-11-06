@@ -25,6 +25,8 @@ A player's wait only runs while they are online and is saved with the world. Gro
 
 The assault, defender, camper and roadblock spawns of Bandits already work on any map, as they are placed around the player.
 
+Those regular spawns can be made rarer with the "Regular Bandits Spawn Chance" option, in percent of each clan's spawn chance (default 100). 40 gives about 0.45 groups per day from day 30 on. Unlike Bandits' spawn multiplier it leaves the group sizes alone, and it never changes the stored clan data.
+
 On Real USA it also replaces the Kentucky town outlines YANMC uses to tell towns from countryside with the 828 town boxes of Real USA's town maps (`RealUSA.TOWN_MAPS`). YANMC's urban/rural sandbox options (`BanditSpawnsUrban`, `PoliceSpawnsRural`, …), its Week One events and its rural battle audio then follow the Real USA towns.
 
 ## Server config
