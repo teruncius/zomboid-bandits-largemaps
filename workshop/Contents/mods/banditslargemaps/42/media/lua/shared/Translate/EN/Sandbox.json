@@ -15,5 +15,7 @@
   "Sandbox_BanditsLargeMaps.FarMaxDistance": "Far Points Maximum Distance",
   "Sandbox_BanditsLargeMaps.FarMaxDistance_tooltip": "In tiles. Groups move about 4 tiles per game minute.",
   "Sandbox_BanditsLargeMaps.RecycleDistance": "Recycle Distance",
-  "Sandbox_BanditsLargeMaps.RecycleDistance_tooltip": "In tiles. Wanderer groups farther than this from every player are moved to a far point around a player."
+  "Sandbox_BanditsLargeMaps.RecycleDistance_tooltip": "In tiles. Wanderer groups farther than this from every player are moved to a far point around a player.",
+  "Sandbox_BanditsLargeMaps.RegularSpawnChance": "Regular Bandits Spawn Chance",
+  "Sandbox_BanditsLargeMaps.RegularSpawnChance_tooltip": "In percent of each clan's spawn chance, for assault groups, defenders, camps, roadblocks and companions, not wanderers. Group sizes stay the same. 40 gives about 0.45 groups per day from day 30 on, about 0.2 to 0.3 before."
 }
