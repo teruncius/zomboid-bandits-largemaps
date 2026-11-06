@@ -1,3 +1,6 @@
+default:
+    @just --list
+
 # check the lua for syntax errors
 check:
     luac -p workshop/Contents/mods/banditslargemaps/42/media/lua/server/*.lua
