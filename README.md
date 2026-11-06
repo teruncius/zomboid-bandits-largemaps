@@ -13,13 +13,15 @@ YANMC Bandits Core keeps the same destinations, and logs these groups as `too_fa
 
 ## What it does
 
-Server side, every 10 game minutes while a player is online:
+Server side, every game minute while a player is online:
 
-- replaces the destinations with points around each online player: far points (400 to 900 tiles) where groups start and roam, and near points (up to 50 tiles) so that some routes pass the players
+- replaces the destinations with points 400 to 900 tiles around each online player, where groups start and roam
+- moves every group that was not sent to a player away when it gets within 250 tiles of one, dead groups too, so their bodies don't show up either
+- sends one group to each area every 1.8 to 3 days a player is online, about 0.4 groups per player per day. Players within 300 tiles of each other share an area and its groups, so playing together doesn't bring more of them
+- the sent group walks up to its player and waits about 64 tiles away until Bandits (or YANMC) turns it into NPCs. Other groups are kept away from it, so it doesn't fight them on the way
 - moves living, automatically spawned groups farther than 3000 tiles from every player to a far point
-- sends groups whose destination is no longer around any player to a new one
 
-Groups placed by hand and dead groups are left alone. Distances and point counts are sandbox options on the "Bandits Wanderers for Large Maps" page.
+A player's wait only runs while they are online and is saved with the world. Groups placed by hand are left alone. All of these values are sandbox options on the "Bandits Wanderers for Large Maps" page.
 
 The assault, defender, camper and roadblock spawns of Bandits already work on any map, as they are placed around the player.
 

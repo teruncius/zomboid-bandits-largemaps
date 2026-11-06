@@ -1,13 +1,28 @@
 VERSION = 1,
 
+option BanditsLargeMaps.EncounterMinDays = {
+    type = double, min = 0.1, max = 60, default = 1.8,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.EncounterMinDays,
+}
+
+option BanditsLargeMaps.EncounterMaxDays = {
+    type = double, min = 0.1, max = 60, default = 3,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.EncounterMaxDays,
+}
+
+option BanditsLargeMaps.AreaDistance = {
+    type = integer, min = 100, max = 2000, default = 300,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.AreaDistance,
+}
+
+option BanditsLargeMaps.KeepAwayDistance = {
+    type = integer, min = 150, max = 1000, default = 250,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.KeepAwayDistance,
+}
+
 option BanditsLargeMaps.FarPoints = {
     type = integer, min = 1, max = 20, default = 4,
     page = BanditsLargeMaps, translation = BanditsLargeMaps.FarPoints,
-}
-
-option BanditsLargeMaps.NearPoints = {
-    type = integer, min = 0, max = 20, default = 2,
-    page = BanditsLargeMaps, translation = BanditsLargeMaps.NearPoints,
 }
 
 option BanditsLargeMaps.FarMinDistance = {
@@ -18,11 +33,6 @@ option BanditsLargeMaps.FarMinDistance = {
 option BanditsLargeMaps.FarMaxDistance = {
     type = integer, min = 200, max = 5000, default = 900,
     page = BanditsLargeMaps, translation = BanditsLargeMaps.FarMaxDistance,
-}
-
-option BanditsLargeMaps.NearMaxDistance = {
-    type = integer, min = 0, max = 150, default = 50,
-    page = BanditsLargeMaps, translation = BanditsLargeMaps.NearMaxDistance,
 }
 
 option BanditsLargeMaps.RecycleDistance = {
