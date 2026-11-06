@@ -1,9 +1,10 @@
 version=1
+id=3834583588
 title=Bandits Wanderers for Large Maps
 description=Makes Bandits wanderer groups work on big maps like Real USA.
 description=
 description=Bandits sends wanderers between places on the Kentucky map. On other maps they never meet a player and fill up the 100 group limit. This mod replaces those places with points around the online players and moves groups stranded far away from everyone back into reach.
 description=
 description=Requires Bandits. Load it after Bandits and YANMC Bandits Core.
-tags=Build 42;Multiplayer;Misc
-visibility=unlisted
+tags=Build 42;Misc;Multiplayer
+visibility=public
