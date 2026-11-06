@@ -1,6 +1,6 @@
 # zomboid-bandits-largemaps
 
-Project Zomboid (Build 42) mod that makes the wanderer groups of [Bandits](https://steamcommunity.com/workshop/filedetails/?id=3268487204) work on big maps like [Real USA](https://steamcommunity.com/sharedfiles/filedetails/?id=3829712469).
+[Project Zomboid (Build 42) mod](https://steamcommunity.com/sharedfiles/filedetails/?id=3834583588) that makes the wanderer groups of [Bandits](https://steamcommunity.com/workshop/filedetails/?id=3268487204) work on big maps like [Real USA](https://steamcommunity.com/sharedfiles/filedetails/?id=3829712469).
 
 ## Why
 
@@ -31,7 +31,7 @@ Add the mod after Bandits and YANMC Bandits Core, and its workshop item to `Work
 
 ```ini
 Mods=...;Bandits2;...;YANMCBanditsCore;...;com.github.teruncius.banditslargemaps
-WorkshopItems=...;<workshop id>
+WorkshopItems=...;3834583588
 ```
 
 On other big maps YANMC still uses the Kentucky town outlines, so nearly everything counts as rural there. Set `PoliceSpawnsRural = true` in the `YANMCBanditsCoreFresh` sandbox options, otherwise police and SWAT never spawn.
