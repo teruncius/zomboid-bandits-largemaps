@@ -23,6 +23,8 @@ Groups placed by hand and dead groups are left alone. Distances and point counts
 
 The assault, defender, camper and roadblock spawns of Bandits already work on any map, as they are placed around the player.
 
+On Real USA it also replaces the Kentucky town outlines YANMC uses to tell towns from countryside with the 828 town boxes of Real USA's town maps (`RealUSA.TOWN_MAPS`). YANMC's urban/rural sandbox options (`BanditSpawnsUrban`, `PoliceSpawnsRural`, …), its Week One events and its rural battle audio then follow the Real USA towns.
+
 ## Server config
 
 Add the mod after Bandits and YANMC Bandits Core, and its workshop item to `WorkshopItems`:
@@ -32,7 +34,7 @@ Mods=...;Bandits2;...;YANMCBanditsCore;...;com.github.teruncius.banditslargemaps
 WorkshopItems=...;<workshop id>
 ```
 
-YANMC also tells towns from countryside by the Kentucky town outlines, so on Real USA nearly everything counts as rural. Set `PoliceSpawnsRural = true` in the `YANMCBanditsCoreFresh` sandbox options, otherwise police and SWAT never spawn.
+On other big maps YANMC still uses the Kentucky town outlines, so nearly everything counts as rural there. Set `PoliceSpawnsRural = true` in the `YANMCBanditsCoreFresh` sandbox options, otherwise police and SWAT never spawn.
 
 ## Development
 
