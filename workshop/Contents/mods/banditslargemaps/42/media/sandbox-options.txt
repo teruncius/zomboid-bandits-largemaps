@@ -1,0 +1,31 @@
+VERSION = 1,
+
+option BanditsLargeMaps.FarPoints = {
+    type = integer, min = 1, max = 20, default = 4,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.FarPoints,
+}
+
+option BanditsLargeMaps.NearPoints = {
+    type = integer, min = 0, max = 20, default = 2,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.NearPoints,
+}
+
+option BanditsLargeMaps.FarMinDistance = {
+    type = integer, min = 200, max = 5000, default = 400,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.FarMinDistance,
+}
+
+option BanditsLargeMaps.FarMaxDistance = {
+    type = integer, min = 200, max = 5000, default = 900,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.FarMaxDistance,
+}
+
+option BanditsLargeMaps.NearMaxDistance = {
+    type = integer, min = 0, max = 150, default = 50,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.NearMaxDistance,
+}
+
+option BanditsLargeMaps.RecycleDistance = {
+    type = integer, min = 1000, max = 50000, default = 3000,
+    page = BanditsLargeMaps, translation = BanditsLargeMaps.RecycleDistance,
+}
