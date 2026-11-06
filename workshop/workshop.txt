@@ -7,4 +7,4 @@ description=Bandits sends wanderers between places on the Kentucky map. On other
 description=
 description=Requires Bandits. Load it after Bandits and YANMC Bandits Core.
 tags=Build 42;Misc;Multiplayer
-visibility=public
+visibility=unlisted
