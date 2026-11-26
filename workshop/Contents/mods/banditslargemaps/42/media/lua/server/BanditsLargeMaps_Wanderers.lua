@@ -204,13 +204,25 @@ local function bearingFor(player, distance)
     return ZombRandFloat(0, 2 * math.pi)
 end
 
-local function placeForApproach(group, player, players)
+local function nearOtherGroup(x, y, group, groups, distance)
+    local limit = distance * distance
+    for _, other in ipairs(groups) do
+        if other ~= group and distance2(x, y, other.x, other.y) <= limit then return true end
+    end
+    return false
+end
+
+-- sent groups start away from the other players and the other sent groups
+local function placeForApproach(group, player, players, guarded)
     local angle
     for _ = 1, 8 do
         angle = bearingFor(player, APPROACH_DISTANCE)
         local x = player.x + math.cos(angle) * DISPATCH_DISTANCE
         local y = player.y + math.sin(angle) * DISPATCH_DISTANCE
-        if not nearAny(x, y, players, DISPATCH_DISTANCE - 50) then break end
+        if not nearAny(x, y, players, DISPATCH_DISTANCE - 50)
+            and not nearOtherGroup(x, y, group, guarded, GUARD_DISTANCE) then
+            break
+        end
     end
     group.x = math.max(0, player.x + math.cos(angle) * DISPATCH_DISTANCE)
     group.y = math.max(0, player.y + math.sin(angle) * DISPATCH_DISTANCE)
@@ -229,6 +241,14 @@ local function targetOf(group, byKey, players)
         group._blmTarget = player and player.key
     end
     return byKey[group._blmTarget]
+end
+
+-- of two groups sent to the same area, the one already met or else the one
+-- closer to its player is kept
+local function keepOver(group, other, byKey)
+    if (group._blmMet or false) ~= (other._blmMet or false) then return group._blmMet == true end
+    local a, b = byKey[group._blmTarget], byKey[other._blmTarget]
+    return distance2(group.x, group.y, a.x, a.y) < distance2(other.x, other.y, b.x, b.y)
 end
 
 local function release(group)
@@ -277,9 +297,9 @@ end
 -- Sent groups only follow the player they were sent to. Following the nearest
 -- player would hand them to players passing by, whose area did not wait for a
 -- group, while the area they were sent to gets another one.
-local function steer(group, player, players)
+local function steer(group, player, players, guarded)
     if distance2(group.x, group.y, player.x, player.y) > LEASH_DISTANCE * LEASH_DISTANCE then
-        placeForApproach(group, player, players)
+        placeForApproach(group, player, players, guarded)
     end
     local angle = group._blmBearing or bearingFor(player, APPROACH_DISTANCE)
     local approach = group._blmApproach or APPROACH_DISTANCE
@@ -350,6 +370,25 @@ local function update(players, refreshNow)
         if group._blmDispatched and (not group.alive or not targetOf(group, byKey, players)) then
             release(group)
         end
+    end
+    -- players that were apart got a group each, once they share an area only
+    -- one stays sent, so they don't get both or see them fight
+    local kept = {}
+    for _, group in ipairs(wanderers) do
+        if group._blmDispatched then
+            local area = byKey[group._blmTarget].area
+            local other = kept[area]
+            if not other then
+                kept[area] = group
+            elseif keepOver(group, other, byKey) then
+                release(other)
+                kept[area] = group
+            else
+                release(group)
+            end
+        end
+    end
+    for _, group in ipairs(wanderers) do
         if group._blmDispatched then guarded[#guarded + 1] = group end
     end
     for _, group in ipairs(wanderers) do
@@ -368,7 +407,7 @@ local function update(players, refreshNow)
             end
             if group._blmDispatched then
                 local target = byKey[group._blmTarget]
-                steer(group, target, players)
+                steer(group, target, players, guarded)
                 sent[target.area] = true
             elseif #far > 0 then
                 if nearAny(group.x, group.y, players, keepAway)
@@ -401,9 +440,10 @@ local function update(players, refreshNow)
                 local group = table.remove(idle, index)
                 group._blmDispatched = true
                 local target = choice(area)
-                placeForApproach(group, target, players)
-                steer(group, target, players)
+                placeForApproach(group, target, players, guarded)
+                steer(group, target, players, guarded)
                 sent[area] = true
+                guarded[#guarded + 1] = group
                 for _, other in ipairs(wanderers) do
                     if other ~= group and other.alive and not other._blmDispatched and isAutomatic(other)
                         and nearAny(other.x, other.y, { group }, GUARD_DISTANCE) then
