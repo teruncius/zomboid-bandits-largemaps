@@ -215,9 +215,28 @@ local function placeForApproach(group, player, players)
     group.x = math.max(0, player.x + math.cos(angle) * DISPATCH_DISTANCE)
     group.y = math.max(0, player.y + math.sin(angle) * DISPATCH_DISTANCE)
     group.z = 0
+    group._blmTarget = player.key
     group._blmBearing = angle
     group._blmApproach = APPROACH_DISTANCE
     group._blmWaiting = 0
+end
+
+-- the player a sent group is for, groups sent before the player was saved on
+-- the group take the nearest one
+local function targetOf(group, byKey, players)
+    if group._blmTarget == nil then
+        local player = nearest(group.x, group.y, players)
+        group._blmTarget = player and player.key
+    end
+    return byKey[group._blmTarget]
+end
+
+local function release(group)
+    group._blmDispatched = nil
+    group._blmTarget = nil
+    group._blmBearing = nil
+    group._blmApproach = nil
+    group._blmWaiting = nil
 end
 
 -- Groups that are gone or smaller than a minute ago, while alive and close to
@@ -255,11 +274,12 @@ local function detectEncounters(wanderers, players, waits)
     end
 end
 
-local function steer(group, players)
-    local player, distance = nearest(group.x, group.y, players)
-    if distance > LEASH_DISTANCE then
+-- Sent groups only follow the player they were sent to. Following the nearest
+-- player would hand them to players passing by, whose area did not wait for a
+-- group, while the area they were sent to gets another one.
+local function steer(group, player, players)
+    if distance2(group.x, group.y, player.x, player.y) > LEASH_DISTANCE * LEASH_DISTANCE then
         placeForApproach(group, player, players)
-        player, distance = nearest(group.x, group.y, players)
     end
     local angle = group._blmBearing or bearingFor(player, APPROACH_DISTANCE)
     local approach = group._blmApproach or APPROACH_DISTANCE
@@ -322,8 +342,14 @@ local function update(players, refreshNow)
     local sent = {}
     local idle = {}
     local guarded = {}
+    local byKey = {}
+    for _, player in ipairs(players) do byKey[player.key] = player end
     for _, group in ipairs(wanderers) do
-        if group._blmDispatched and not group.alive then group._blmDispatched = nil end
+        -- a group whose player went offline is no longer sent to anyone, the
+        -- player is still due and gets a new group when back
+        if group._blmDispatched and (not group.alive or not targetOf(group, byKey, players)) then
+            release(group)
+        end
         if group._blmDispatched then guarded[#guarded + 1] = group end
     end
     for _, group in ipairs(wanderers) do
@@ -338,12 +364,12 @@ local function update(players, refreshNow)
                 -- YANMC turns groups into NPCs bit by bit, give the rest some
                 -- time before sending it away
                 group._blmMetMinutes = (group._blmMetMinutes or 0) + 1
-                if group._blmMetMinutes > STUCK_MINUTES then group._blmDispatched = nil end
+                if group._blmMetMinutes > STUCK_MINUTES then release(group) end
             end
             if group._blmDispatched then
-                steer(group, players)
-                local player = nearest(group.x, group.y, players)
-                sent[player.area] = true
+                local target = byKey[group._blmTarget]
+                steer(group, target, players)
+                sent[target.area] = true
             elseif #far > 0 then
                 if nearAny(group.x, group.y, players, keepAway)
                     or nearAny(group.x, group.y, guarded, GUARD_DISTANCE)
@@ -374,8 +400,9 @@ local function update(players, refreshNow)
                 local index = ZombRand(#idle) + 1
                 local group = table.remove(idle, index)
                 group._blmDispatched = true
-                placeForApproach(group, choice(area), players)
-                steer(group, players)
+                local target = choice(area)
+                placeForApproach(group, target, players)
+                steer(group, target, players)
                 sent[area] = true
                 for _, other in ipairs(wanderers) do
                     if other ~= group and other.alive and not other._blmDispatched and isAutomatic(other)
